@@ -1,4 +1,5 @@
 from pathlib import Path
+from random import choice
 
 import numpy as np
 import tensorflow as tf
@@ -67,35 +68,30 @@ def _make_train_and_validation_generators(data_dir,
             continue
 
         for face_path in person_dir.iterdir():
-            for person_dir2 in data_dir.iterdir():
-                if not person_dir2.is_dir():
-                    continue
+            for face_path2 in person_dir.iterdir():
+                data.append(((face_path, face_path2), 1))
 
-                for face_path2 in person_dir2.iterdir():
-                    if person_dir == person_dir2:
-                        label = 1
-                    else:
-                        label = 0
-
-                    data.append(((face_path, face_path2), label))
+            for face_path2 in choice([d for d in data_dir.iterdir() if d != person_dir and d.is_dir()]).iterdir():
+                data.append(((face_path, face_path2), 0))
 
     validation_start_index: int = int((len(data) - 1) * (1 - validation_split))
 
     def data_generator(start_index, end_index):
-        batch_input1 = []
-        batch_input2 = []
-        batch_labels = []
-        for i, record in enumerate(data[start_index:end_index]):
-            batch_input1.append(_load_image(record[0][0]))
-            batch_input2.append(_load_image(record[0][1]))
-            batch_labels.append(record[1])
+        while True:
+            batch_input1 = []
+            batch_input2 = []
+            batch_labels = []
+            for i, record in enumerate(data[start_index:end_index]):
+                batch_input1.append(_load_image(record[0][0]))
+                batch_input2.append(_load_image(record[0][1]))
+                batch_labels.append(record[1])
 
-            if len(batch_labels) % batch_size == 0 or i == end_index - 1:
-                yield (np.array(batch_input1), np.array(batch_input2)), np.array(batch_labels)
+                if len(batch_labels) % batch_size == 0 or i == end_index - 1:
+                    yield (np.array(batch_input1), np.array(batch_input2)), np.array(batch_labels)
 
-                batch_input1.clear()
-                batch_input2.clear()
-                batch_labels.clear()
+                    batch_input1.clear()
+                    batch_input2.clear()
+                    batch_labels.clear()
 
     def _load_image(path):
         img = load_img(path, target_size=target_size)
