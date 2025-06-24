@@ -1,5 +1,6 @@
 from pathlib import Path
 from random import choice
+import math
 
 import numpy as np
 import tensorflow as tf
@@ -41,7 +42,7 @@ def train_siamese_network_train(data_dir):
     model = Model(inputs=[left_input, right_input], outputs=outputs)
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-    train_generator, validation_generator = _make_train_and_validation_generators(
+    train_generator, train_steps, validation_generator, validation_steps = _make_train_and_validation_generators(
         data_dir,
         batch_size=batch_size,
         validation_split=0.2,
@@ -50,7 +51,9 @@ def train_siamese_network_train(data_dir):
     history = model.fit(
         train_generator,
         epochs=num_epochs,
-        validation_data=validation_generator
+        steps_per_epoch=train_steps,
+        validation_data=validation_generator,
+        validation_steps=validation_steps,
     )
     model.save('siamese_model.h5')
 
@@ -74,6 +77,7 @@ def _make_train_and_validation_generators(data_dir,
             for face_path2 in choice([d for d in data_dir.iterdir() if d != person_dir and d.is_dir()]).iterdir():
                 data.append(((face_path, face_path2), 0))
 
+    print('Количество пар:', len(data))
     validation_start_index: int = int((len(data) - 1) * (1 - validation_split))
 
     def data_generator(start_index, end_index):
@@ -97,7 +101,9 @@ def _make_train_and_validation_generators(data_dir,
         img = load_img(path, target_size=target_size)
         return img_to_array(img) / 255.0
 
-    return data_generator(0, validation_start_index), data_generator(validation_start_index, len(data))
+    train_steps = math.ceil(validation_start_index / batch_size)
+    validation_steps = math.ceil((len(data) - validation_start_index) / batch_size)
+    return data_generator(0, validation_start_index), train_steps, data_generator(validation_start_index, len(data)), validation_steps
 
 
 if __name__ == '__main__':

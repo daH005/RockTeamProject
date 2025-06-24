@@ -69,7 +69,7 @@ def recognize_single_face_on_image_by_db(image: np.ndarray,
         db_path=db_path,
         model_name='Facenet512',
         enforce_detection=False,
-        threshold=0.3,
+        threshold=1,
         silent=True,
     )
 
