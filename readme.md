@@ -23,7 +23,8 @@
 - 3 сверточных слоя (32 -> 64 -> 128)
 - 128 нейронов
 
-Validation Accuracy: 0.3
+`Validation Accuracy: 0.3`
+
 Epoch 20/20
 12/12 ━━━━━━━━━━━━━━━━━━━━ 9s 744ms/step - accuracy: 1.0000 - loss: 5.8378e-04 - val_accuracy: 0.3056 - val_loss: 6.7305
 Реализация нейросети и подсчёт accuracy в модуле own_models/common_network_train.py
@@ -35,11 +36,14 @@ Epoch 20/20
 - 128 нейронов
 - Определение сходства по Евклидовому расстоянию
 
-Validation Accuracy: ...
+`Validation Accuracy: 0.82`
+
+Epoch 20/20
+5085/5085 ━━━━━━━━━━━━━━━━━━━━ 1s 142us/step - accuracy: 0.8437 - loss: 0.4936 - val_accuracy: 0.8281 - val_loss: 0.5366
 Реализация нейросети и подсчёт accuracy в модуле own_models/siamese_network_train.py
 
 ## 3. Сравнительная модель FaceNet512 из пакета deepface
-Validation Accuracy = 1.0
+`Validation Accuracy: 1.0`
 Accuracy посчитан вручную. Реализация в модуле _facenet512_calc_accuracy.py
 
 # Определение координат лиц
@@ -65,3 +69,9 @@ DEBUG=False
 # Перспективы
 - Улучшение работы с видео/изображениями низкого качества
 - Распределённая обработка запросов через кластер
+
+# Ссылка на наши модели (common - 0.3, siamese - 0.82):
+https://disk.yandex.ru/d/fdL2o-Mdor1cFQ
+
+# Ссылка на презентацию проекта
+...
