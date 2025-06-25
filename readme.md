@@ -62,8 +62,8 @@ Accuracy посчитан вручную. Реализация в модуле _
 Через пакет deepface (под капотом Yolov8)
 
 # Доступ к сервису (http://localhost:8080)
-- Через веб-интерфейс
 - Через API
+- Через веб-интерфейс
 
 # Запуск проекта локально (Проект разрабатывался и тестировался исключительно на Linux. Работа не Windows не проверялась, но не исключается)
 1. Определите файл .env в корне проекта. Пример содержимого:
@@ -83,7 +83,7 @@ DEBUG=False
 - Распределённая обработка запросов через кластер
 
 # Ссылка на наши модели (common - 0.3, siamese - 0.48, 0.82):
-https://disk.yandex.ru/d/fdL2o-Mdor1cFQ
+[https://disk.yandex.ru/d/fdL2o-Mdor1cFQ](https://disk.yandex.ru/d/5mFiMSDf_zEXYA)
 
 # Ссылка на презентацию проекта
-...
+[https://disk.yandex.ru/d/Rh26xdoONAf5xQ](https://disk.yandex.ru/d/Rh26xdoONAf5xQ)
