@@ -55,7 +55,7 @@ Epoch 1/1
 Реализация нейросети и подсчёт accuracy в модуле own_models/siamese_network_train.py
 
 ## 3. Сравнительная модель FaceNet512 из пакета deepface
-`Validation Accuracy: 1.0`
+`Validation Accuracy: 0.97`
 Accuracy посчитан вручную. Реализация в модуле _facenet512_calc_accuracy.py
 
 # Определение координат лиц
